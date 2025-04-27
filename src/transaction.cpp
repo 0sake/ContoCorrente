@@ -1,4 +1,4 @@
-#include "transaction.h"
+#include "../include/ContoCorrente/transaction.h"
 #include <iostream>
 
 Transaction::Transaction(const std::string& d, const std::string& desc, double amt)
