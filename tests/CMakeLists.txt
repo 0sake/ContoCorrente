@@ -13,6 +13,9 @@ add_executable(my_tests
     tests/test_account.cpp
 )
 
+target_include_directories(test_runner
+    PRIVATE ${PROJECT_SOURCE_DIR}/include
+)
 
 target_link_libraries(my_tests PRIVATE GTest::gtest_main)
 
