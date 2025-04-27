@@ -11,6 +11,7 @@ protected:
     double amount;           
 public:
     Transaction(const std::string& d, const std::string& desc, double amt);
+    
     virtual ~Transaction() = default;
 
     virtual char getType() const = 0;
@@ -25,12 +26,14 @@ public:
 class IncomeTransaction : public Transaction {
 public:
     IncomeTransaction(const std::string& d, const std::string& desc, double amt);
+    
     char getType() const override;
 };
 
 class ExpenseTransaction : public Transaction {
 public:
     ExpenseTransaction(const std::string& d, const std::string& desc, double amt);
+    
     char getType() const override;
 };
 
