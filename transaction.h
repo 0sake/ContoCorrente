@@ -15,6 +15,8 @@ public:
 
     virtual char getType() const = 0;
 
+    virtual double getAmount() const { return amount; }
+
     virtual std::string toCSV() const;
 
     virtual void print() const;
