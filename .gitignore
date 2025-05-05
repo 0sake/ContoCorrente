@@ -1,0 +1,5 @@
+# Ignora directory di build
+build/
+
+#Ignora cartella informazioni
+info/
