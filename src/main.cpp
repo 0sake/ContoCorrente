@@ -12,9 +12,13 @@ int main() {
         std::cout << "Nessun file trovato, inizializzo nuovo conto." << std::endl;
 
     // Esempio di transazioni
-    account.addIncome("2025-04-01", "Stipendio", 2500.00);
-    account.addExpense("2025-04-03", "Affitto", 800.00);
-    account.addExpense("2025-04-05", "Spesa alimentare", 120.50);
+    account.addTransaction("2025-03-01", "Stipendio", TransactionType::Income, 2500.00);
+    account.addTransaction("2025-03-03", "Affitto", TransactionType::Expense, 800.00);
+    account.addTransaction("2025-03-05", "Spesa alimentare", TransactionType::Expense, 120.50);
+    account.addTransaction("2025-03-10", "Rimborso spese", TransactionType::Income, 200.00);
+    account.addTransaction("2025-03-15", "Bollette", "E", 150.00);
+    account.addTransaction("2025-03-20", "Dividendi", "I", 300.00);
+    
 
     account.printAll();
     if (account.saveToFile(filename))

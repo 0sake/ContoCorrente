@@ -3,23 +3,27 @@
 #include <sstream>
 #include <iostream>
 
-void Account::addIncome(const std::string& date, const std::string& desc, double amt) {
-    transactions.emplace_back(std::make_unique<IncomeTransaction>(date, desc, amt));
+
+
+void Account::addTransaction(const std::string& date, const std::string& desc, TransactionType type, double amt) {
+    transactions.emplace_back(std::make_unique<Transaction>(date, desc, type, amt));
 }
 
-void Account::addExpense(const std::string& date, const std::string& desc, double amt) {
-    transactions.emplace_back(std::make_unique<ExpenseTransaction>(date, desc, amt));
+void Account::addTransaction(const std::string& date, const std::string& desc, std::string type, double amt) {
+    TransactionType transactionType = (type == "I") ? TransactionType::Income : TransactionType::Expense;
+    transactions.emplace_back(std::make_unique<Transaction>(date, desc, transactionType, amt));
 }
 
 double Account::getBalance() const {
     double balance = 0.0;
     for (const auto& tr : transactions) {
-        if (tr->getType() == 'I') balance += tr->getAmount();
-        else if (tr->getType() == 'E') balance -= tr->getAmount();
+        if (tr->getTypetoString() == 'I') balance += tr->getAmount();
+        else if (tr->getTypetoString() == 'E') balance -= tr->getAmount();
     }
     return balance;
 }
 
+//TODO rimuovere print (lasciato per debuggare con più facilità)
 void Account::printAll() const {
     for (const auto& tr : transactions) tr->print();
     std::cout << "Saldo: " << getBalance() << std::endl;
@@ -44,13 +48,13 @@ bool Account::loadFromFile(const std::string& filename) {
     while (std::getline(ifs, line)) {
         std::istringstream iss(line);
         std::string type, date, amtStr, desc;
+        TransactionType transactionType;
         if (!std::getline(iss, type, ',')) continue;
         std::getline(iss, date, ',');
         std::getline(iss, amtStr, ',');
         std::getline(iss, desc);
         double amt = std::stod(amtStr);
-        if (type == "I") addIncome(date, desc, amt);
-        else if (type == "E") addExpense(date, desc, amt);
+        addTransaction(date, desc, type, amt);
     }
     return true;
 }
