@@ -34,7 +34,7 @@ bool isDate(const std::string& date) {
 
 Transaction::Transaction(const std::string& d, const std::string& desc, 
     TransactionType type, double amt)
-    : date(d), description(desc), amount(amt) {
+    : date(d), description(desc), amount(amt), type(type) {
         if (amt < 0) {
             throw std::invalid_argument("Amount cannot be negative");}
         

@@ -2,7 +2,8 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-
+#include <vector>
+#include <regex>
 
 
 void Account::addTransaction(const std::string& date, const std::string& desc, TransactionType type, double amt) {
@@ -57,4 +58,71 @@ bool Account::loadFromFile(const std::string& filename) {
         addTransaction(date, desc, type, amt);
     }
     return true;
+}
+
+
+Transaction Account::getTransaction(int index) const {
+    if (index < 0 || index >= transactions.size()) throw std::out_of_range("Index out of range");
+    return *transactions[index];
+}
+
+
+bool Account::removeTransaction(int index)  {
+    if (index < 0 || index >= transactions.size()) return false;
+    transactions.erase(transactions.begin() + index);
+    return true;
+}
+
+bool Account::modifyTransaction(int index, const std::string& date, const std::string& desc, TransactionType type, double amt) {
+    if (index < 0 || index >= transactions.size()) return false;
+    transactions[index] = std::make_unique<Transaction>(date, desc, type, amt);
+    return true;
+}
+
+std::vector<Transaction*> Account::getTransactionsbyDate(const std::string& date) const {
+    std::vector<Transaction*> transactionsByDate;
+    for (const auto& tr : transactions) {
+        if (tr->getDate() == date) {
+            transactionsByDate.push_back(tr.get());
+        }
+    }
+    if(transactionsByDate.empty()) {
+        std::cout << "Nessuna transazione trovata per la data specificata." << std::endl;
+    }
+    return transactionsByDate;
+}
+
+std::vector<Transaction*> Account::getTransactionsbyDateTypeFiltered(const std::string& date, TransactionType type) const {
+    std::vector<Transaction*> transactionsByDate;
+    for (const auto& tr : transactions) {
+        if (tr->getDate() == date && tr->getType() == type) {
+            transactionsByDate.push_back(tr.get());
+        }
+    }
+    if(transactionsByDate.empty()) {
+        std::cout << "Nessuna transazione trovata per la data e il tipo specificati." << std::endl;
+    }
+    return transactionsByDate;
+}
+
+bool contieneParola(const std::string& descrizione, const std::string& parola) {
+    // Costruisci il pattern con confini di parola
+    std::string pat = R"(\b)" + parola + R"(\b)";
+    std::regex re(pat, std::regex_constants::icase);
+
+    // Cerca la parola
+    return std::regex_search(descrizione, re);
+}
+
+std::vector<Transaction*> Account::getTransactionsbyDescription(const std::string& desc) const {
+    std::vector<Transaction*> transactionsByDesc;
+    for (const auto& tr : transactions) {
+        if (contieneParola(tr->getDescription(), desc)) {
+            transactionsByDesc.push_back(tr.get());
+        }
+    }
+    if(transactionsByDesc.empty()) {
+        std::cout << "Nessuna transazione trovata per la descrizione specificata." << std::endl;
+    }
+    return transactionsByDesc;
 }

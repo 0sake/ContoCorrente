@@ -23,6 +23,10 @@ public:
     virtual ~Transaction() = default;
 
     virtual TransactionType getType() const;
+    
+    virtual std::string getDate() const { return date; }
+
+    virtual std::string getDescription() const { return description; }
 
     virtual char getTypetoString() const;
 
