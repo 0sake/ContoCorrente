@@ -15,8 +15,6 @@ public:
     void addTransaction(const std::string& date, const std::string& desc, 
         std::string type, double amt);
     double getBalance() const;
-    //print lasciato solamente per facilitare il debug
-    void printAll() const;
     bool saveToFile(const std::string& filename) const;
     bool loadFromFile(const std::string& filename);     
     int getTransactionCount() const { return transactions.size(); }

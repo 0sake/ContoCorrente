@@ -24,12 +24,6 @@ double Account::getBalance() const {
     return balance;
 }
 
-//TODO rimuovere print (lasciato per debuggare con più facilità)
-void Account::printAll() const {
-    for (const auto& tr : transactions) tr->print();
-    std::cout << "Saldo: " << getBalance() << std::endl;
-}
-
 bool Account::saveToFile(const std::string& filename) const {
     std::ofstream ofs(filename);
     if (!ofs) return false;

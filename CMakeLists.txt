@@ -61,3 +61,4 @@ target_include_directories(test_runner
 # Registra i test per ctest
 add_test(NAME AllTests COMMAND test_runner)
 
+#pollo

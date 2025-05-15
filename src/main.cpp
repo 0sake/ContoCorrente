@@ -21,7 +21,6 @@ int main() {
     account.addTransaction("2025-03-20", "Tassazione", "E", 150.00);
     account.addTransaction("2025-03-20", "Dividendi", "I", 300.00);
     
-    account.printAll();
 
     // Numero di transazioni totali
     std::cout << "Numero di transazioni: " << account.getTransactionCount() << std::endl;
@@ -32,13 +31,11 @@ int main() {
     // Cancella i-esima transazione
     account.removeTransaction(i);
 
-    account.printAll();
 
     // Modifica i-esima transazione
     i = 1; // esempio: Affitto
     account.modifyTransaction(i, "2024-04-04", "Affitto seconda casa", TransactionType::Expense, 850.00);
-    
-    account.printAll();
+
 
     
     std::cout << "Transazioni del 2025-03-20:" << std::endl;

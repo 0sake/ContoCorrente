@@ -23,3 +23,5 @@ TEST(TransactionTest, ExpenseGetType) {
     Transaction exp("2025-04-28", "Bolletta", TransactionType::Expense, 60.0);
     EXPECT_EQ(exp.getType(), TransactionType::Expense);
 }
+
+
