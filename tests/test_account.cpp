@@ -49,8 +49,12 @@ TEST_F(AccountTest, SaveLoadFromFile) {
 //todo test su costruttore con allocazione dimanica
 TEST_F(AccountTest, DynamicAllocation) {
     Account* accPtr = new Account();
-    accPtr->addTransaction("2025-05-01", "Stipendio", TransactionType::Income, 1500.0);
-    EXPECT_DOUBLE_EQ(accPtr->getBalance(), 1500.0);
+    EXPECT_THROW({
+        accPtr->addTransaction("2025-05-01", "Stipendio", TransactionType::Income, -1);
+    }, std::invalid_argument);
+    EXPECT_THROW({
+        accPtr->addTransaction("2025-05-99", "Stipendio", TransactionType::Income, 1500.0);
+    }, std::invalid_argument);
     delete accPtr; // Assicurati di deallocare la memoria
 }
 //todo test per rimozione transa fuori index
